@@ -1,0 +1,6 @@
+.body-padding{padding: 25px;}
+.input:focus{outline: none !important;border:1px solid #3594f1;box-shadow: 0 0 10px #719ECE;}
+.form-control{padding:2px 12px}
+.totals .table > tbody > tr > td{
+    padding: 0;
+}
