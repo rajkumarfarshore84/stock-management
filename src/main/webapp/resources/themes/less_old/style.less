@@ -1,0 +1,59 @@
+/* ============ CSS LESS Variables and Functions (START) ===========*/
+@default-font-family: Helvetica, Arial, sans-serif;
+@default-radius: 8px;
+@default-color: #5B83AD;
+@icon-pencil: 0 -144px;
+@heading: 16px;
+@base-height: 20%;
+@body-height: (@base-height * 2);
+@logo-height: 30px;
+@logo-width: 30px;
+
+/*Generic rounded corner function example*/
+.rounded-corners(@top-left: @default-radius, @top-right: @default-radius, @bottom-left: @default-radius, @bottom-right: @default-radius) {
+ -moz-border-radius: @top-left @top-right @bottom-right @bottom-left;
+ -webkit-border-radius: @top-left @top-right @bottom-right @bottom-left;
+ border-radius: @top-left @top-right @bottom-right @bottom-left;
+}
+
+/* rounded corenrs function for well class*/
+.well-rounded-corners (@radius: @default-radius) {
+ .rounded-corners(@radius, @radius, 5px, 5px)
+}
+/* ================= END ===================*/
+
+
+/* ================= Actual CSS Starts Here =============== */
+body {
+ font-family: @default-font-family;
+    background-color: @default-color; /* background-color change example using css less. See variable default-color */
+    padding-bottom: 40px;
+    padding-top: 60px;
+}
+
+.icon-pencil {
+ background-position: @icon-pencil; /* background-position change example. See variable icon-pencil */
+}
+
+.well {
+ .well-rounded-corners; /* rounded corner change example using LESS function call. See function call well-rounded-corners */
+}
+
+.general-text-color {
+    color: @default-color;
+}
+
+h4 {
+ .general-text-color; /* Mixin example: including other CSS class in current style. See general-text-color style */
+ font-size: @heading;
+}
+
+.body-height {
+ height: @body-height; /*Operations example: body-height is calculated by multiplying base-heigh with 2 (base-heigh*2) */
+}
+
+.logo {
+ height: @logo-height;
+ width: @logo-width;
+}
+

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="com.rajtech_stockwebservice_war_1.0PU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>com.rajtech.stockwebservice.model.FspEvents</class>
+    <class>com.rajtech.stockwebservice.model.SalesMaster</class>
+    <class>com.rajtech.stockwebservice.model.StoreStocks</class>
+    <class>com.rajtech.stockwebservice.model.PurchaseMaster</class>
+    <class>com.rajtech.stockwebservice.model.Categories</class>
+    <class>com.rajtech.stockwebservice.model.FspUserEvent</class>
+    <class>com.rajtech.stockwebservice.model.PurchasedItems</class>
+    <class>com.rajtech.stockwebservice.model.OrderItems</class>
+    <class>com.rajtech.stockwebservice.model.Roles</class>
+    <class>com.rajtech.stockwebservice.model.User</class>
+    <class>com.rajtech.stockwebservice.model.Products</class>
+    <class>com.rajtech.stockwebservice.model.Vendors</class>
+    <class>com.rajtech.stockwebservice.model.OrderMaster</class>
+    <class>com.rajtech.stockwebservice.model.Warehouse</class>
+    <class>com.rajtech.stockwebservice.model.SalesItems</class>
+    <class>com.rajtech.stockwebservice.model.Users</class>
+    <class>com.rajtech.stockwebservice.model.ManufacturedStock</class>
+    <class>com.rajtech.stockwebservice.model.ManufacturedStocks</class>
+    <class>com.rajtech.stockwebservice.model.PaymentType</class>
+    <class>com.rajtech.stockwebservice.model.PackMaster</class>
+    <class>com.rajtech.stockwebservice.model.Countries</class>
+    <class>com.rajtech.stockwebservice.model.PackItem</class>
+    <class>com.rajtech.stockwebservice.model.SalesItem</class>
+    <class>com.rajtech.stockwebservice.model.Tax</class>
+    <class>com.rajtech.stockwebservice.model.PackagesSize</class>
+    <class>com.rajtech.stockwebservice.model.StockPacking</class>
+    <class>com.rajtech.stockwebservice.model.CompanyMargin</class>
+    <class>com.rajtech.stockwebservice.model.States</class>
+    <class>com.rajtech.stockwebservice.model.Customer</class>
+    <class>com.rajtech.stockwebservice.model.Customer_1</class>
+    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/billing_stocks?zeroDateTimeBehavior=convertToNull"/>
+      <property name="javax.persistence.jdbc.user" value="root"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.password" value="fsp"/>
+    </properties>
+  </persistence-unit>
+</persistence>

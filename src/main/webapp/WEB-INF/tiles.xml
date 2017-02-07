@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>  
+    <definition name="home_template" template="/WEB-INF/views/templates/home_template.jsp" >
+        <put-attribute name="title" value="Stock "></put-attribute>
+        <put-attribute name="head" value="/WEB-INF/views/templates/head.jsp" />
+        <put-attribute name="header" value="/WEB-INF/views/templates/header.jsp" />
+        <put-attribute name="sidebar" value="/WEB-INF/views/templates/sidebar.jsp" />
+    </definition>
+    
+    <definition name="login_template" template="/WEB-INF/views/templates/login_template.jsp" >
+        <put-attribute name="title" value="Stock "></put-attribute>
+        <put-attribute name="head" value="/WEB-INF/views/templates/head.jsp" />
+    </definition>
+    
+    <definition name="*" extends="home_template">
+        <put-attribute name="body" value="/WEB-INF/views/{1}.jsp" />
+    </definition>
+    <definition name="theme_template" template="/WEB-INF/views/templates/theme.jsp" >
+        <put-attribute name="head" value="/WEB-INF/views/templates/head.jsp" />
+        <put-attribute name="header" value="/WEB-INF/views/templates/header.jsp" />
+        <put-attribute name="sidebar" value="/WEB-INF/views/templates/sidebar.jsp" />
+        <put-attribute name="title" value="Stock "/>
+    </definition>
+    <definition name="*/*" extends="theme_template">
+        <put-attribute name="body" value="/WEB-INF/views/{1}/{2}.jsp" />
+    </definition>  
+    <definition name="ajax" template="/WEB-INF/views/templates/ajax.jsp" >
+        <put-attribute name="title" value="Stock"></put-attribute>
+    </definition>
+    <definition name="ajax/*" extends="ajax">
+        <put-attribute name="body" value="/WEB-INF/views/{1}/{2}/{3}.jsp" />
+    </definition>  
+    <definition name="login" extends="login_template">
+        <put-attribute name="body" value="/WEB-INF/views/login.jsp" />
+    </definition>
+      
+</tiles-definitions>
