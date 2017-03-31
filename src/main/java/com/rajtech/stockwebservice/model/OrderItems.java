@@ -41,12 +41,15 @@ public class OrderItems implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Basic(optional = false)
     @NotNull
+    @Column(name = "qty")
     private BigDecimal qty;
     @Basic(optional = false)
     @NotNull
+    @Column(name = "price")
     private BigDecimal price;
     @Basic(optional = false)
     @NotNull
+    @Column(name = "weight")
     private BigDecimal weight;
 
     private static final long serialVersionUID = 1L;

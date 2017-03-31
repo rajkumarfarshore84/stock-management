@@ -244,6 +244,7 @@ public class PurchaseMaster implements Serializable {
         this.purchasedItemsListSave.add(item);
     }
 
+    @XmlTransient
     public Set<PurchasedItems> getPurchasedItemsListSave() {
         return purchasedItemsListSave;
     }

@@ -33,6 +33,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "StockPacking.findByValue", query = "SELECT s FROM StockPacking s WHERE s.value = :value")})
 public class StockPacking implements Serializable {
 
+    @Lob
+    @Column(name = "barcode")
+    private byte[] barcode;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,9 +45,6 @@ public class StockPacking implements Serializable {
     private Integer id;
     @Column(name = "value")
     private Integer value;
-    @Lob
-    @Column(name = "barcode")
-    private byte[] barcode;
     @JoinColumn(name = "manufactured_stocks_id", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false)
     private ManufacturedStocks manufacturedStocksId;
@@ -74,13 +75,6 @@ public class StockPacking implements Serializable {
         this.value = value;
     }
 
-    public byte[] getBarcode() {
-        return barcode;
-    }
-
-    public void setBarcode(byte[] barcode) {
-        this.barcode = barcode;
-    }
 
     public ManufacturedStocks getManufacturedStocksId() {
         return manufacturedStocksId;
@@ -121,6 +115,14 @@ public class StockPacking implements Serializable {
     @Override
     public String toString() {
         return "com.rajtech.stockwebservice.model.StockPacking[ id=" + id + " ]";
+    }
+
+    public byte[] getBarcode() {
+        return barcode;
+    }
+
+    public void setBarcode(byte[] barcode) {
+        this.barcode = barcode;
     }
     
 }

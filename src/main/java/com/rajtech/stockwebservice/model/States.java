@@ -37,6 +37,10 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "States.findByName", query = "SELECT s FROM States s WHERE s.name = :name")})
 public class States implements Serializable {
 
+    @Size(max = 45)
+    @Column(name = "code")
+    private String code;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -115,6 +119,14 @@ public class States implements Serializable {
     @Override
     public String toString() {
         return "com.rajtech.stockwebservice.model.States[ id=" + id + " ]";
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
     
 }

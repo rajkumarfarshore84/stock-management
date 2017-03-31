@@ -138,10 +138,12 @@ public class OrderMaster implements Serializable {
         this.orderItemsList = orderItemsList;
     }
 
+    @XmlTransient
     public Set<PurchaseMaster> getPurchaseMasterListSave() {
         return purchaseMasterListSave;
     }
 
+    @XmlTransient
     public Set<OrderItems> getOrderItemsListSave() {
         return orderItemsListSave;
     }

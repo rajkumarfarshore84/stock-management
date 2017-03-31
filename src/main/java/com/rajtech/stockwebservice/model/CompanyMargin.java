@@ -8,6 +8,7 @@ package com.rajtech.stockwebservice.model;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,6 +18,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -65,12 +67,12 @@ public class CompanyMargin implements Serializable {
     private Double taxAmount;
     @Column(name = "created_at")
     @Temporal(TemporalType.DATE)
-    private Date createdAt;
+    private Date createdAt = new Date();
     @JoinColumn(name = "tax_id", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false)
     private Tax taxId;
     @JoinColumn(name = "manuf_id", referencedColumnName = "id")
-    @ManyToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private ManufacturedStocks manufId;
 
     public CompanyMargin() {

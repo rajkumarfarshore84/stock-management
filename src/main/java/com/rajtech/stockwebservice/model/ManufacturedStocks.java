@@ -7,8 +7,10 @@ package com.rajtech.stockwebservice.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -21,6 +23,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -81,22 +84,22 @@ public class ManufacturedStocks implements Serializable {
     @NotNull
     @Column(name = "created_at", nullable = false)
     @Temporal(TemporalType.DATE)
-    private Date createdAt;
+    private Date createdAt = new Date();
     @Basic(optional = false)
     @NotNull
     @Column(name = "updated_at", nullable = false)
     @Temporal(TemporalType.DATE)
-    private Date updatedAt;
+    private Date updatedAt = new Date();
     @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false)
     private Products productId;
-    @JoinColumn(name = "sales_item_id", referencedColumnName = "id", nullable = false)
-    @ManyToOne(optional = false)
-    private SalesItem salesItemId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "manufacturedStocksId")
     private List<StockPacking> stockPackingList;
-    @OneToMany(mappedBy = "manufId")
-    private List<CompanyMargin> companyMarginList;
+    @OneToOne(cascade = CascadeType.ALL,mappedBy = "manufId")
+    private CompanyMargin companyMarginList;
+    
+    @OneToOne(cascade=CascadeType.ALL,mappedBy = "manufId")
+    private CompanyMargin companyMarginSet;
 
     public ManufacturedStocks() {
     }
@@ -188,14 +191,6 @@ public class ManufacturedStocks implements Serializable {
         this.productId = productId;
     }
 
-    public SalesItem getSalesItemId() {
-        return salesItemId;
-    }
-
-    public void setSalesItemId(SalesItem salesItemId) {
-        this.salesItemId = salesItemId;
-    }
-
     @XmlTransient
     public List<StockPacking> getStockPackingList() {
         return stockPackingList;
@@ -206,11 +201,11 @@ public class ManufacturedStocks implements Serializable {
     }
 
     @XmlTransient
-    public List<CompanyMargin> getCompanyMarginList() {
+    public CompanyMargin getCompanyMarginList() {
         return companyMarginList;
     }
 
-    public void setCompanyMarginList(List<CompanyMargin> companyMarginList) {
+    public void setCompanyMarginList(CompanyMargin companyMarginList) {
         this.companyMarginList = companyMarginList;
     }
 
@@ -238,5 +233,15 @@ public class ManufacturedStocks implements Serializable {
     public String toString() {
         return "com.rajtech.stockwebservice.model.ManufacturedStocks[ id=" + id + " ]";
     }
+
+    public CompanyMargin getCompanyMarginSet() {
+        return companyMarginSet;
+    }
+
+    public void setCompanyMarginSet(CompanyMargin companyMarginSet) {
+        this.companyMarginSet = companyMarginSet;
+    }
+    
+    
     
 }

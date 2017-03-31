@@ -181,5 +181,25 @@
                 }
             });
         }
+    getMrp = function(){
+        var sub_total_1 = 0;
+        var include_margin = 0;
+        var include_tax = 0;
+        var grand_total = 0;
+        $("input[id^=mrp_]").not("#mrp_tax,#mrp_mweight,#mrp_margin").each(function(){
+            console.log("Id for sum",$(this).attr('id'));
+            sub_total_1 += parseFloat($(this).val());
+        });
+        include_margin = (sub_total_1 * parseFloat($("#mrp_margin").val()))/100;
+        sub_total_1 = sub_total_1+include_margin;
+        console.log("Margin Included:",sub_total_1);
+        tx_val = $("#mrp_tax").val();
+        tax =$("#mrp_tax option[value='"+tx_val+"']").text().split(":");
+        include_tax = (sub_total_1 * parseFloat(tax[1]))/100;
+        //console.log("Tax Included:",sub_total_1);
+        grand_total = sub_total_1 + include_tax;
+        $("#totalmrp").val(grand_total);
+        console.log("Sub Total:",sub_total_1);
+    }
 
 })(jQuery);

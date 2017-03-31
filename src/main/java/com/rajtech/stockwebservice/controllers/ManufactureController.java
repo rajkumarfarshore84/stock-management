@@ -5,10 +5,15 @@
  */
 package com.rajtech.stockwebservice.controllers;
 
+import com.rajtech.stockwebservice.model.CompanyMargin;
 import com.rajtech.stockwebservice.model.ManufacturedStocks;
 import com.rajtech.stockwebservice.model.Products;
+import com.rajtech.stockwebservice.model.SalesItem;
+import com.rajtech.stockwebservice.model.Tax;
 import com.rajtech.stockwebservice.model.Users;
+import com.rajtech.stockwebservice.service.CompanyMarginService;
 import com.rajtech.stockwebservice.service.StockService;
+import com.rajtech.stockwebservice.service.TaxService;
 import com.rajtech.stockwebservice.utilities.JsonResponse;
 import com.rajtech.stockwebservice.utilities.Utility;
 import com.rajtech.stockwebservice.validate.StockFormValidator;
@@ -16,6 +21,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,56 +50,68 @@ public class ManufactureController extends AppController implements Serializable
     @Autowired
     StockService stockService;
     
+    @Autowired
+    CompanyMarginService companyMarginService;
+    
+    @Autowired
+    TaxService taxService;
+    
     @RequestMapping(value = {"/admin/manufacture/oilstock/{page}","/supervisor/manufacture/oilstock/{page}"
             ,"/user/manufacture/oilstock/{page}"},method = RequestMethod.GET)
     public String listInventory(@PathVariable("page") String page,ModelMap model) throws Exception{
         utilHashSecure = new Utility();
         int _page = Integer.parseInt(utilHashSecure.decrypt(page));
+        int pageCount = Math.round((stockService.count())/5);
+        int currentPage = _page;
+        if(_page ==0){
+            currentPage = 1;
+        }
+        List<ManufacturedStocks> stockList = stockService.findByPage(_page, 5);
+        
+        model.addAttribute("stockList", stockList);
+        model.addAttribute("pageCount", pageCount);
+        model.addAttribute("currentPage", currentPage);
         return "inventory/list";
     }
     @RequestMapping(value = {"/admin/manufacture/oilstock/add","/supervisor/manufacture/oilstock/add"
             ,"/user/manufacture/add"},method = RequestMethod.GET)
     public String addInventory(ModelMap model){
-        ManufacturedStocks mStock = new ManufacturedStocks();
+        CompanyMargin mStock = new CompanyMargin();
         
         model.addAttribute("editStock", mStock);
         return "inventory/ajax/add";
     }
     @RequestMapping(value = {"/admin/manufacture/oilstock/postStock","/supervisor/manufacture/oilstock/postStock"
-            ,"/user/manufacture/postStock"},method = RequestMethod.POST)
-    public @ResponseBody JsonResponse postInventory(@ModelAttribute("mStock") ManufacturedStocks manufacturedStocks,
+            ,"/user/manufacture/oilstock/postStock"},method = RequestMethod.POST)
+    public @ResponseBody JsonResponse postInventory(@ModelAttribute("mStock") CompanyMargin manufacturedStocks,
             HttpSession session,BindingResult result) throws Exception{
         Date currentDate = new Date();
         
         stockFormValidator.validate(manufacturedStocks, result);
         JsonResponse res = new JsonResponse();
         double mrpTmp = 0;
-//        double baseP = Double.parseDouble(manufacturedStocks.getBasePrice().toString());
-//        int retailMar = manufacturedStocks.getRetailerMargin();
-//        double compPrice =0;
-//        compPrice = (baseP * Double.parseDouble((String.valueOf(compMar)))/100);
-//        double retailPrice =0;
-//        retailPrice = (baseP * Double.parseDouble((String.valueOf(retailMar)))/100);
-//        mrpTmp = (baseP + compPrice + retailPrice );
-//        BigDecimal mrp = new BigDecimal(mrpTmp);
-        //manufacturedStocks.setMrp(mrp);
+
         if (!result.hasErrors()) {
             if(manufacturedStocks.getId()!=null){
                 ManufacturedStocks stock_cur = stockService.findById(manufacturedStocks.getId());
                 stock_cur.setCreatedAt(stock_cur.getCreatedAt());
                 stock_cur.setUpdatedAt(currentDate);
+                SalesItem si = new SalesItem();
+                si.setId(0);
                 stockService.update(stock_cur);
             }else{
-                stockService.save(manufacturedStocks);
+                
+                Tax taxId = taxService.findById(manufacturedStocks.getTaxId().getId());
+                manufacturedStocks.setTaxId(taxId);
+                manufacturedStocks.setTaxAmount(Double.parseDouble(taxId.getValue().toString()));
+                companyMarginService.save(manufacturedStocks);
             }
             res.setStatus("Success");
         } else {
             res.setStatus("FAIL");
             res.setResult(result.getAllErrors());
         }
-//        }catch(Exception ex){
-//            System.err.println(ex.getMessage());
-//        }
+
         return res;
     }
     

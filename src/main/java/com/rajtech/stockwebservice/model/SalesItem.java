@@ -65,8 +65,7 @@ public class SalesItem implements Serializable {
     @JoinColumn(name = "sales_id", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false)
     private SalesMaster salesId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "salesItemId")
-    private List<ManufacturedStocks> manufacturedStocksList;
+
 
     public SalesItem() {
     }
@@ -137,15 +136,6 @@ public class SalesItem implements Serializable {
 
     public void setSalesId(SalesMaster salesId) {
         this.salesId = salesId;
-    }
-
-    @XmlTransient
-    public List<ManufacturedStocks> getManufacturedStocksList() {
-        return manufacturedStocksList;
-    }
-
-    public void setManufacturedStocksList(List<ManufacturedStocks> manufacturedStocksList) {
-        this.manufacturedStocksList = manufacturedStocksList;
     }
 
     @Override

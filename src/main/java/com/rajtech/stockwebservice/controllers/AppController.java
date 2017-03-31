@@ -11,11 +11,13 @@ import com.rajtech.stockwebservice.model.Customer;
 import com.rajtech.stockwebservice.model.OrderMaster;
 import com.rajtech.stockwebservice.model.Products;
 import com.rajtech.stockwebservice.model.States;
+import com.rajtech.stockwebservice.model.Tax;
 import com.rajtech.stockwebservice.model.Vendors;
 import com.rajtech.stockwebservice.service.CountryService;
 import com.rajtech.stockwebservice.service.OrderService;
 import com.rajtech.stockwebservice.service.ProductService;
 import com.rajtech.stockwebservice.service.StatesService;
+import com.rajtech.stockwebservice.service.TaxService;
 import com.rajtech.stockwebservice.service.VendorService;
 import com.rajtech.stockwebservice.utilities.Utility;
 import java.util.HashMap;
@@ -50,6 +52,9 @@ public class AppController {
     
     @Autowired
     StatesService statesService;
+    
+    @Autowired
+    TaxService taxService;
     
     @ModelAttribute("weightUnit")
     public Map< String, String > listWeight(){
@@ -130,5 +135,13 @@ public class AppController {
         }
         return countryList;
     }
-   
+   @ModelAttribute("taxList")
+    public Map<Integer, String> listTax(){
+        Map< Integer, String > taxList = new HashMap<Integer, String>();
+        List<Tax> conList = taxService.findByAll();
+        for(Tax tax: conList){
+            taxList.put(tax.getId(), tax.getType()+":"+tax.getValue());
+        }
+        return taxList;
+    }
 }
